@@ -5,26 +5,34 @@
 </template>
 
 <script>
-import moment from 'moment';
-
 export default {
-  name: 'Home',
-  data () {
+  name: "Home",
+  data() {
     return {
-      currentTime: moment().format('dddd, MMMM Do YYYY, h:mm:ss a')
-    }
+      currentTime: this.getCurrentTime(),
+    };
   },
   computed: {
-    welcomeMessage () {
-      return 'Welcome! Your local time is: ' + this.currentTime;
-    }
+    welcomeMessage() {
+      return "Welcome! Your local time is: " + this.currentTime;
+    },
   },
   mounted() {
-    const setTimer = () => setTimeout(() => {
-      this.currentTime = moment().format('dddd, MMMM Do YYYY, h:mm:ss a');
-      setTimer();
-    }, 1000);
+    const setTimer = () =>
+      setTimeout(() => {
+        this.currentTime = this.getCurrentTime();
+        setTimer();
+      }, 1000);
     setTimer();
-  }
-}
+  },
+  methods: {
+    getCurrentTime() {
+      const date = new Date();
+      return new Intl.DateTimeFormat("en", {
+        timeStyle: "medium",
+        dateStyle: "full",
+      }).format(date);
+    },
+  },
+};
 </script>
