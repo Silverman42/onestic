@@ -8,32 +8,39 @@
 </template>
 
 <script>
-import moment from "moment";
-import StoreList from '@/components/StoreList/StoreList';
-const stores = require('@/assets/stores/stores.json');
+import { getCurrentTime } from "../helpers/time";
+import StoreList from "@/components/StoreList/StoreList";
+const stores = require("@/assets/stores/stores.json");
 
 export default {
-  name: 'Stores',
+  name: "Stores",
   components: {
-    StoreList
+    StoreList,
   },
-  data () {
+  data() {
     return {
-      currentTime: moment().format('dddd, MMMM Do YYYY, h:mm:ss a'),
-      stores
-    }
+      currentTime: this.getCurrentTime(),
+      stores,
+    };
   },
   computed: {
-    welcomeMessage () {
-      return 'Welcome to our restaurants list! Your local time is: ' + this.currentTime;
-    }
+    welcomeMessage() {
+      return (
+        "Welcome to our restaurants list! Your local time is: " +
+        this.currentTime
+      );
+    },
   },
   mounted() {
-    const setTimer = () => setTimeout(() => {
-      this.currentTime = moment().format('dddd, MMMM Do YYYY, h:mm:ss a');
-      setTimer();
-    }, 1000);
+    const setTimer = () =>
+      setTimeout(() => {
+        this.currentTime = this.getCurrentTime();
+        setTimer();
+      }, 1000);
     setTimer();
-  }
-}
+  },
+  methods: {
+    getCurrentTime,
+  },
+};
 </script>

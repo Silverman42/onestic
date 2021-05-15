@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { getCurrentTime } from "../helpers/time";
 export default {
   name: "Home",
   data() {
@@ -26,13 +27,7 @@ export default {
     setTimer();
   },
   methods: {
-    getCurrentTime() {
-      const date = new Date();
-      return new Intl.DateTimeFormat("en", {
-        timeStyle: "medium",
-        dateStyle: "full",
-      }).format(date);
-    },
+    getCurrentTime,
   },
 };
 </script>
