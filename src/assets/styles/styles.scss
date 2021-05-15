@@ -1,6 +1,10 @@
 @import './variables/_color.scss';
 @import './variables/_spacing.scss';
 
+*{
+  box-sizing: border-box;
+}
+
 html, body {
   min-height: 100%;
   margin: 0;

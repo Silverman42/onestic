@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { getCurrentTime } from "../helpers/time";
+import { getCurrentTime } from "@/helpers/time";
 import StoreList from "@/components/StoreList/StoreList";
 const stores = require("@/assets/stores/stores.json");
 
