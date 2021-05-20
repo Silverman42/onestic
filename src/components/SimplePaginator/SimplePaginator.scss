@@ -1,0 +1,15 @@
+.paginator__container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: var(--space-m);
+
+    .paginator__btn{
+        padding: var(--space-xxs) var(--space-xs);
+    }
+
+    .paginator__number{
+        padding: var(--space-xxs) 0px;
+        margin: 0px var(--space-xxs);
+    }
+}

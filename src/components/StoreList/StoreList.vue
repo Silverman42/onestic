@@ -1,8 +1,8 @@
 <template>
   <div>
     <p>
-      Here you can find all of our restaurants. We have {{ storesCount }} stores
-      right now!
+      Here you can find all of our restaurants. We have
+      {{ totalStoreCount }} stores right now!
     </p>
     <div class="store-list">
       <Store
@@ -32,21 +32,17 @@ export default {
       type: Array,
       default: () => [],
     },
+    totalStoreCount: {
+      type: Number,
+      default: 0,
+    },
   },
   computed: {
     storesWithImages() {
-      // return _.map(this.stores, function(store) {
-      //   store["image"] = "https://via.placeholder.com/300?text=" + store.name;
-
-      //   return store;
-      // });
       return this.stores.map((store) => {
         store["image"] = `https://via.placeholder.com/300?text=${store.name}`;
         return store;
       });
-    },
-    storesCount() {
-      return this.stores.length;
     },
   },
 };
