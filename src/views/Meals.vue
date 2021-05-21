@@ -42,7 +42,7 @@ export default {
       this.meals = mealNumber;
       setTimeout(() => {
         this.$router.push({ name: "Recipe", query: { meal: mealNumber } });
-      }, 8000);
+      }, 3000);
     },
   },
 };

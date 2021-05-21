@@ -1,7 +1,7 @@
 <template>
   <div class="recipe-alert__container">
     <p>
-      You can cook {{ meals }} meals with the quantity of ingredents you entered
+      {{ mealNumber }}
     </p>
   </div>
 </template>
@@ -14,6 +14,14 @@ export default {
     meals: {
       type: [Number, String],
       default: 0,
+    },
+  },
+  computed: {
+    mealNumber() {
+      if (isNaN(this.meals)) {
+        return `Invalid number of Meals`;
+      }
+      return `You can cook ${this.meals} meals with the quantity of ingredents you entered`;
     },
   },
 };

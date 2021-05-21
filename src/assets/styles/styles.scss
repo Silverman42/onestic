@@ -33,6 +33,16 @@ html, body {
   width: 100%;
 }
 
+.page_recipe__ingredents{
+  dl>dt{
+    font-weight: bold;
+  }
+
+  dl>dd{
+    margin-bottom: var(--space-l);
+  }
+}
+
 @media (min-width: 1200px) {
   .page {
     max-width: var(--boxed-max-width);
