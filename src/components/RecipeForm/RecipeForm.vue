@@ -71,6 +71,7 @@ export default {
   name: "RecipeForm",
   data() {
     return {
+      shouldAlert: false,
       meals: 0,
       quantity: {
         eggs: 0,
@@ -96,8 +97,7 @@ export default {
         return Math.round(quantity / this.ingredients[ingredent]);
       });
       this.meals = Math.min(...aggregates);
-      console.log(this.meals);
-      // this.$emit("calculateRecipe", this.meals);
+      this.$emit("calculateRecipe", this.meals);
     },
   },
 };

@@ -1,0 +1,19 @@
+.search-bar__container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .search-bar__input{
+        display:block;
+        height: var( --space-l);
+        width: 100%;
+        margin-right: var(--space-s);
+    }
+
+    .search-bar__button{
+        display:inline-block;
+        padding: var(--space-xxs) var(--space-xs);
+        width: auto;
+    }
+}

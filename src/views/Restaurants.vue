@@ -1,6 +1,8 @@
 <template>
   <div class="page page__stores">
     <p>{{ welcomeMessage }}</p>
+    <search-bar @enterSearch="enterSearch($event)" />
+    <joke-of-the-day />
     <div class="pages__stores-list">
       <StoreList
         :stores="paginatedStores"
@@ -20,18 +22,21 @@
 import { getCurrentTime } from "@/helpers/time";
 import StoreList from "@/components/StoreList/StoreList";
 import SimplePaginator from "@/components/SimplePaginator/SimplePaginator";
-// const stores = require("@/assets/stores/stores.json");
+import SearchBar from "@/components/SearchBar/SearchBar";
+import JokeOfTheDay from "@/components/JokeOfTheDay/JokeOfTheDay";
 
 export default {
   name: "Stores",
   components: {
     StoreList,
     SimplePaginator,
+    SearchBar,
+    JokeOfTheDay,
   },
   data() {
     return {
       currentTime: this.getCurrentTime(),
-      stores: [],
+      searchInput: "",
       cachedStore: [],
       paginatedStores: [],
       pagination: {
@@ -66,8 +71,10 @@ export default {
     async getStores() {
       await import("@/assets/stores/stores.json").then((item) => {
         this.cachedStore = Object.values(item);
+        this.cachedStore.pop();
         this.paginateCachedStores(this.cachedStore);
       });
+      // await this.paginateCachedStores(this.cachedStore);
     },
     paginateCachedStores(stores = []) {
       this.pagination.lastPage = Math.ceil(
@@ -86,7 +93,9 @@ export default {
       if (this.pagination.currentPage < this.pagination.lastPage) {
         const current = this.pagination.currentPage + 1;
         this.pagination.currentPage = current;
-        this.paginateCachedStores(this.cachedStore);
+        this.searchCachedStores().then((stores) => {
+          this.paginateCachedStores(stores);
+        });
       }
     },
     decrementPage() {
@@ -94,8 +103,28 @@ export default {
       if (this.pagination.currentPage > this.pagination.firstPage) {
         const current = this.pagination.currentPage - 1;
         this.pagination.currentPage = current;
-        this.paginateCachedStores(this.cachedStore);
+        this.searchCachedStores().then((stores) => {
+          this.paginateCachedStores(stores);
+        });
       }
+    },
+    async enterSearch(searchValue) {
+      this.searchInput = searchValue;
+      this.pagination.currentPage = 1;
+      this.searchCachedStores().then((stores) => {
+        this.paginateCachedStores(stores);
+      });
+    },
+    async searchCachedStores() {
+      if (this.searchInput.length === 0) {
+        return this.cachedStore;
+      }
+      const filteredStores = await this.cachedStore.filter((store) => {
+        return store.name
+          .toLowerCase()
+          .includes(this.searchInput.toLowerCase());
+      });
+      return filteredStores;
     },
   },
 };
