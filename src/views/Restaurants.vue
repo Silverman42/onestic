@@ -2,7 +2,6 @@
   <div class="page page__stores">
     <p>{{ welcomeMessage }}</p>
     <search-bar @enterSearch="enterSearch($event)" />
-    <joke-of-the-day />
     <div class="pages__stores-list">
       <StoreList
         :stores="paginatedStores"
@@ -23,7 +22,6 @@ import { getCurrentTime } from "@/helpers/time";
 import StoreList from "@/components/StoreList/StoreList";
 import SimplePaginator from "@/components/SimplePaginator/SimplePaginator";
 import SearchBar from "@/components/SearchBar/SearchBar";
-import JokeOfTheDay from "@/components/JokeOfTheDay/JokeOfTheDay";
 
 export default {
   name: "Stores",
@@ -31,7 +29,6 @@ export default {
     StoreList,
     SimplePaginator,
     SearchBar,
-    JokeOfTheDay,
   },
   data() {
     return {
@@ -69,12 +66,12 @@ export default {
   methods: {
     getCurrentTime,
     async getStores() {
-      await import("@/assets/stores/stores.json").then((item) => {
-        this.cachedStore = Object.values(item);
-        this.cachedStore.pop();
-        this.paginateCachedStores(this.cachedStore);
-      });
-      // await this.paginateCachedStores(this.cachedStore);
+      await fetch("/stores/stores.json")
+        .then((response) => response.json())
+        .then((response) => {
+          this.cachedStore = response;
+          this.paginateCachedStores(this.cachedStore);
+        });
     },
     paginateCachedStores(stores = []) {
       this.pagination.lastPage = Math.ceil(
